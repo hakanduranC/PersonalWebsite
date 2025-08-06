@@ -1,63 +1,46 @@
 "use client"
 
-import { useQuery } from "convex/react"
-import { api } from "@/convex/_generated/api"
+import { useUser } from "@clerk/nextjs"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { ArrowLeft } from "lucide-react"
 
 export default function DebugPage() {
-  const debugInfo = useQuery(api.debug.checkContent)
+  const { user, isLoaded } = useUser()
+
+  if (!isLoaded) {
+    return <div>Loading...</div>
+  }
 
   return (
-    <div className="container py-8 max-w-4xl">
-      <div className="mb-6 flex items-center gap-4">
-        <Button variant="ghost" size="icon" asChild>
-          <Link href="/admin">
-            <ArrowLeft className="h-4 w-4" />
-          </Link>
-        </Button>
-        <h1 className="text-3xl font-bold">Debug Database</h1>
-      </div>
-
+    <div className="container py-8">
+      <h1 className="text-2xl font-bold mb-4">Debug User Information</h1>
+      
       <Card>
         <CardHeader>
-          <CardTitle>Database Status</CardTitle>
+          <CardTitle>Current User Data</CardTitle>
         </CardHeader>
         <CardContent>
-          {debugInfo ? (
-            <div className="space-y-4">
-              <div>
-                <h3 className="font-semibold">Total Content Items: {debugInfo.contentCount}</h3>
-              </div>
-              
-              <div>
-                <h3 className="font-semibold">Content by Section:</h3>
-                <ul className="list-disc pl-5">
-                  <li>Education: {debugInfo.contentBySection.education}</li>
-                  <li>Experience: {debugInfo.contentBySection.experience}</li>
-                  <li>Projects: {debugInfo.contentBySection.projects}</li>
-                  <li>Skills: {debugInfo.contentBySection.skills}</li>
-                </ul>
-              </div>
+          <pre className="text-xs overflow-auto">
+            {JSON.stringify({
+              id: user?.id,
+              primaryEmail: user?.primaryEmailAddress?.emailAddress,
+              emailAddresses: user?.emailAddresses?.map(e => e.emailAddress),
+              username: user?.username,
+              firstName: user?.firstName,
+              lastName: user?.lastName,
+              fullName: user?.fullName,
+            }, null, 2)}
+          </pre>
+        </CardContent>
+      </Card>
 
-              <div>
-                <h3 className="font-semibold">Profile Exists: {debugInfo.profileExists ? "Yes" : "No"}</h3>
-              </div>
-
-              {debugInfo.sampleContent.length > 0 && (
-                <div>
-                  <h3 className="font-semibold">Sample Content:</h3>
-                  <pre className="bg-gray-100 p-2 rounded text-xs overflow-auto">
-                    {JSON.stringify(debugInfo.sampleContent, null, 2)}
-                  </pre>
-                </div>
-              )}
-            </div>
-          ) : (
-            <p>Loading...</p>
-          )}
+      <Card className="mt-4">
+        <CardHeader>
+          <CardTitle>Raw User Object</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <pre className="text-xs overflow-auto">
+            {JSON.stringify(user, null, 2)}
+          </pre>
         </CardContent>
       </Card>
     </div>
