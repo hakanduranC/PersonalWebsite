@@ -52,7 +52,7 @@ export function UnifiedProjects() {
                         src={project.metadata.logoUrl}
                         alt={`${project.title} logo`}
                         fill
-                        className="object-contain"
+                        className="object-contain dark:invert"
                       />
                     </div>
                   )}

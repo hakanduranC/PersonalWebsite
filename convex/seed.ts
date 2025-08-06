@@ -125,12 +125,7 @@ export const seedData = mutation({
         section: "projects" as const,
         title: "FlexfitAI (TUM DevOps Course Project)",
         period: "March 2025 – Present",
-        content: `Key contributor to a team project designing and implementing a full-stack web application based on modern DevOps principles, featuring a Generative AI component.
-        
-- Engineered a Retrieval-Augmented Generation (RAG) system using Python, LangChain, and a vector database (e.g., Weaviate) for the GenAI module.
-- Implemented containerization for all application microservices (client, server, GenAI, DB) using Docker and Docker Compose.
-- Developed and managed CI/CD pipelines with GitHub Actions for automated building, testing, and deployment to a Kubernetes staging environment.
-- Orchestrated deployment using Kubernetes (Helm/raw manifests) and configured system observability with Prometheus and Grafana.`,
+        content: `Full-stack web application with Generative AI component, built using modern DevOps principles. Implemented RAG system with LangChain & Weaviate, containerized microservices with Docker/Kubernetes, and established CI/CD pipelines with GitHub Actions. Configured observability using Prometheus & Grafana.`,
         tags: ["React", "Spring Boot", "Python", "Docker", "Kubernetes", "GitHub Actions", "Prometheus", "Grafana", "LangChain", "Weaviate"],
         metadata: {
           logoUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/tum-logo-Ur1AylbzkA5M7dRnaW7j6Q6Yp3FJL5.png",
