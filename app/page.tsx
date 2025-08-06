@@ -4,6 +4,7 @@ import { UnifiedEducation } from "@/components/unified-education"
 import { UnifiedExperience } from "@/components/unified-experience"
 import { UnifiedProjects } from "@/components/unified-projects"
 import { UnifiedSkills } from "@/components/unified-skills"
+import { ContactSection } from "@/components/contact-section"
 import { Footer } from "@/components/footer"
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
       <UnifiedExperience />
       <UnifiedProjects />
       <UnifiedSkills />
+      <ContactSection />
       <Footer />
     </div>
   )

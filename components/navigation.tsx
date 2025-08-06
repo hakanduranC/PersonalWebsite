@@ -7,10 +7,11 @@ import { ModeToggle } from "./mode-toggle"
 
 const links = [
   { href: "/", label: "Home" },
-  { href: "/blog", label: "Blog" },
-  { href: "/projects", label: "Projects" },
-  { href: "/cv", label: "CV" },
-  { href: "/contact", label: "Contact" },
+  { href: "#education", label: "Education" },
+  { href: "#experience", label: "Experience" },
+  { href: "#projects", label: "Projects" },
+  { href: "#skills", label: "Skills" },
+  { href: "#contact", label: "Contact" },
 ]
 
 export function Navigation() {
@@ -32,6 +33,13 @@ export function Navigation() {
                   "transition-colors hover:text-foreground/80",
                   pathname === link.href ? "text-foreground" : "text-foreground/60",
                 )}
+                onClick={(e) => {
+                  if (link.href.startsWith('#')) {
+                    e.preventDefault()
+                    const element = document.querySelector(link.href)
+                    element?.scrollIntoView({ behavior: 'smooth' })
+                  }
+                }}
               >
                 {link.label}
               </Link>
