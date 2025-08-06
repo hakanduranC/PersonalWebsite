@@ -1,4 +1,5 @@
 import { ClerkProvider } from '@clerk/nextjs'
+import { AdminHeader } from '@/components/admin-header'
 
 export default function AdminLayout({
   children,
@@ -8,7 +9,10 @@ export default function AdminLayout({
   return (
     <ClerkProvider>
       <div className="min-h-screen bg-background">
-        {children}
+        <AdminHeader />
+        <main>
+          {children}
+        </main>
       </div>
     </ClerkProvider>
   )

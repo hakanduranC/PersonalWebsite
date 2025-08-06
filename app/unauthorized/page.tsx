@@ -1,8 +1,14 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { ShieldOff } from "lucide-react"
+import { useClerk, useUser } from "@clerk/nextjs"
 
 export default function UnauthorizedPage() {
+  const { signOut } = useClerk()
+  const { user } = useUser()
+
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="text-center space-y-6 p-8">
@@ -12,12 +18,20 @@ export default function UnauthorizedPage() {
           You don't have permission to access the admin panel. 
           This area is restricted to authorized administrators only.
         </p>
+        {user && (
+          <p className="text-sm text-muted-foreground">
+            Signed in as: {user.primaryEmailAddress?.emailAddress}
+          </p>
+        )}
         <div className="space-x-4">
           <Button asChild>
             <Link href="/">Go to Homepage</Link>
           </Button>
-          <Button variant="outline" asChild>
-            <Link href="/sign-out">Sign Out</Link>
+          <Button 
+            variant="outline" 
+            onClick={() => signOut({ redirectUrl: "/" })}
+          >
+            Sign Out
           </Button>
         </div>
       </div>
