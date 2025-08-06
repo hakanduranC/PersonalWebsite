@@ -4,8 +4,8 @@ import "./globals.css"
 import { Providers } from "./providers"
 
 export const metadata: Metadata = {
-  title: "Hakan Duran App",
-  description: "Created by Hakan Duran",
+  title: "Hakan Duran - Full Stack Developer",
+  description: "Personal portfolio and CV of Hakan Duran - Full Stack Developer & Computer Engineer",
   generator: "Hakan Duran",
 }
 
