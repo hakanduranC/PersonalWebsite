@@ -23,7 +23,7 @@ export default function UnauthorizedPage() {
             Signed in as: {user.primaryEmailAddress?.emailAddress}
           </p>
         )}
-        <div className="space-x-4">
+        <div className="flex flex-wrap gap-4 justify-center">
           <Button asChild>
             <Link href="/">Go to Homepage</Link>
           </Button>
@@ -33,6 +33,11 @@ export default function UnauthorizedPage() {
           >
             Sign Out
           </Button>
+          {user?.primaryEmailAddress?.emailAddress === 'hakanduranyt@gmail.com' && (
+            <Button variant="secondary" asChild>
+              <Link href="/setup-admin">Setup Admin Access</Link>
+            </Button>
+          )}
         </div>
       </div>
     </div>
