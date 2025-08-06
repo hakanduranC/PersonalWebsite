@@ -4,7 +4,7 @@ import { useUser } from "@clerk/nextjs"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
-import { User, FileText, Briefcase, GraduationCap, FolderOpen, Wrench, Eye } from "lucide-react"
+import { User, FileText, Briefcase, GraduationCap, FolderOpen, Wrench } from "lucide-react"
 
 export default function AdminDashboard() {
   const { user } = useUser()
@@ -39,21 +39,11 @@ export default function AdminDashboard() {
                 <CardDescription>{section.description}</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-2">
-                  <Button asChild className="w-full">
-                    <Link href={section.href}>
-                      Manage {section.title}
-                    </Link>
-                  </Button>
-                  {section.href.includes('/content/') && (
-                    <Button asChild variant="outline" className="w-full">
-                      <Link href={`/admin/preview/${section.href.split('/').pop()}`}>
-                        <Eye className="h-4 w-4 mr-2" />
-                        Live Preview
-                      </Link>
-                    </Button>
-                  )}
-                </div>
+                <Button asChild className="w-full">
+                  <Link href={section.href}>
+                    Manage {section.title}
+                  </Link>
+                </Button>
               </CardContent>
             </Card>
           )

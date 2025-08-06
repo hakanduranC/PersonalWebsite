@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
-import { ArrowLeft, Plus, Save, Trash2, GripVertical, Eye } from "lucide-react"
+import { ArrowLeft, Plus, Save, Trash2, GripVertical, Eye, EyeOff, Maximize2, Minimize2 } from "lucide-react"
 import Link from "next/link"
 import { useToast } from "@/hooks/use-toast"
 import { useParams } from "next/navigation"
@@ -17,6 +17,11 @@ import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
 import { ImageUpload } from "@/components/image-upload"
 import { SortableList } from "@/components/sortable-list"
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
+import { UnifiedEducation } from "@/components/unified-education"
+import { UnifiedExperience } from "@/components/unified-experience"
+import { UnifiedProjects } from "@/components/unified-projects"
+import { UnifiedSkills } from "@/components/unified-skills"
 
 const MDEditor = dynamic(
   () => import("@uiw/react-md-editor"),
@@ -88,6 +93,8 @@ export default function UniversalContentAdmin() {
   
   const [items, setItems] = useState<ContentItem[]>([])
   const [hasChanges, setHasChanges] = useState(false)
+  const [isPreviewMode, setIsPreviewMode] = useState(false)
+  const [isFullscreen, setIsFullscreen] = useState(false)
 
   useEffect(() => {
     if (existingItems) {
@@ -204,9 +211,25 @@ export default function UniversalContentAdmin() {
   // Helper to ensure values are never undefined
   const getValue = (value: any) => value || ""
 
+  // Get the preview component based on section
+  const getPreviewComponent = () => {
+    switch (section) {
+      case "education":
+        return <UnifiedEducation />
+      case "experience":
+        return <UnifiedExperience />
+      case "projects":
+        return <UnifiedProjects />
+      case "skills":
+        return <UnifiedSkills />
+      default:
+        return <div>Section not found</div>
+    }
+  }
+
   return (
-    <div className="container py-8 max-w-4xl">
-      <div className="mb-6 flex items-center justify-between">
+    <div className={`${isFullscreen ? 'fixed inset-0 z-50 bg-background' : 'container py-8'}`}>
+      <div className="mb-6 flex items-center justify-between px-4">
         <div className="flex items-center gap-4">
           <Button variant="ghost" size="icon" asChild>
             <Link href="/admin">
@@ -216,12 +239,35 @@ export default function UniversalContentAdmin() {
           <h1 className="text-3xl font-bold">Manage {config.title}</h1>
         </div>
         <div className="flex gap-2">
-          <Button asChild variant="outline">
-            <Link href={`/admin/preview/${section}`}>
-              <Eye className="h-4 w-4 mr-2" />
-              Preview
-            </Link>
+          <Button
+            variant="outline"
+            onClick={() => setIsPreviewMode(!isPreviewMode)}
+          >
+            {isPreviewMode ? (
+              <>
+                <EyeOff className="h-4 w-4 mr-2" />
+                Hide Preview
+              </>
+            ) : (
+              <>
+                <Eye className="h-4 w-4 mr-2" />
+                Show Preview
+              </>
+            )}
           </Button>
+          {isPreviewMode && (
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => setIsFullscreen(!isFullscreen)}
+            >
+              {isFullscreen ? (
+                <Minimize2 className="h-4 w-4" />
+              ) : (
+                <Maximize2 className="h-4 w-4" />
+              )}
+            </Button>
+          )}
           <Button onClick={addItem} variant="outline">
             <Plus className="h-4 w-4 mr-2" />
             Add {section === "skills" ? "Category" : "Item"}
@@ -233,11 +279,18 @@ export default function UniversalContentAdmin() {
         </div>
       </div>
 
-      <SortableList
-        items={items}
-        onReorder={handleReorder}
-        keyExtractor={(item) => item._id || `new-${items.indexOf(item)}`}
-        renderItem={(item, index) => (
+      {isPreviewMode ? (
+        <ResizablePanelGroup 
+          direction="horizontal" 
+          className={`${isFullscreen ? 'h-[calc(100vh-80px)]' : 'h-[calc(100vh-200px)]'}`}
+        >
+          <ResizablePanel defaultSize={50} minSize={30}>
+            <div className="h-full overflow-y-auto p-4">
+              <SortableList
+                items={items}
+                onReorder={handleReorder}
+                keyExtractor={(item) => item._id || `new-${items.indexOf(item)}`}
+                renderItem={(item, index) => (
           <Card>
             <CardHeader>
               <div className="flex items-center justify-between">
@@ -417,8 +470,209 @@ export default function UniversalContentAdmin() {
               )}
             </CardContent>
           </Card>
-        )}
-      />
+                )}
+              />
+            </div>
+          </ResizablePanel>
+          <ResizableHandle withHandle />
+          <ResizablePanel defaultSize={50} minSize={30}>
+            <div className="h-full overflow-y-auto bg-muted/10">
+              <div className="min-h-full">
+                {getPreviewComponent()}
+              </div>
+            </div>
+          </ResizablePanel>
+        </ResizablePanelGroup>
+      ) : (
+        <div className={`${isFullscreen ? '' : 'max-w-4xl mx-auto'}`}>
+          <SortableList
+            items={items}
+            onReorder={handleReorder}
+            keyExtractor={(item) => item._id || `new-${items.indexOf(item)}`}
+            renderItem={(item, index) => (
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle>
+                      {section === "skills" ? "Category" : "Item"} #{index + 1}
+                    </CardTitle>
+                    <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2">
+                        <Label htmlFor={`published-${index}`}>Published</Label>
+                        <Switch
+                          id={`published-${index}`}
+                          checked={item.published}
+                          onCheckedChange={(checked) => updateItem(index, { published: checked })}
+                        />
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => deleteItem(index)}
+                      >
+                        <Trash2 className="h-4 w-4 text-destructive" />
+                      </Button>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {/* Dynamic fields based on section */}
+                  {section === "education" && (
+                    <>
+                      <div className="grid gap-4 md:grid-cols-2">
+                        <div className="space-y-2">
+                          <Label>Institution</Label>
+                          <Input
+                            value={getValue(item.title)}
+                            onChange={(e) => updateItem(index, { title: e.target.value })}
+                            placeholder="University name"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label>Degree</Label>
+                          <Input
+                            value={getValue(item.subtitle)}
+                            onChange={(e) => updateItem(index, { subtitle: e.target.value })}
+                            placeholder="Bachelor of Science"
+                          />
+                        </div>
+                      </div>
+                    </>
+                  )}
+
+                  {section === "experience" && (
+                    <>
+                      <div className="grid gap-4 md:grid-cols-2">
+                        <div className="space-y-2">
+                          <Label>Company</Label>
+                          <Input
+                            value={item.title}
+                            onChange={(e) => updateItem(index, { title: e.target.value })}
+                            placeholder="Company name"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label>Position</Label>
+                          <Input
+                            value={item.subtitle}
+                            onChange={(e) => updateItem(index, { subtitle: e.target.value })}
+                            placeholder="Software Engineer"
+                          />
+                        </div>
+                      </div>
+                    </>
+                  )}
+
+                  {section === "projects" && (
+                    <div className="space-y-2">
+                      <Label>Project Name</Label>
+                      <Input
+                        value={item.title}
+                        onChange={(e) => updateItem(index, { title: e.target.value })}
+                        placeholder="My Awesome Project"
+                      />
+                    </div>
+                  )}
+
+                  {section === "skills" && (
+                    <div className="space-y-2">
+                      <Label>Category</Label>
+                      <Input
+                        value={item.title}
+                        onChange={(e) => updateItem(index, { title: e.target.value })}
+                        placeholder="Programming Languages"
+                      />
+                    </div>
+                  )}
+
+                  {/* Common fields */}
+                  {config.fields.includes("period") && (
+                    <div className="space-y-2">
+                      <Label>Period</Label>
+                      <Input
+                        value={getValue(item.period)}
+                        onChange={(e) => updateItem(index, { period: e.target.value })}
+                        placeholder="Jan 2023 - Present"
+                      />
+                    </div>
+                  )}
+
+                  {config.showMetadata.includes("location") && (
+                    <div className="space-y-2">
+                      <Label>Location</Label>
+                      <Input
+                        value={getValue(item.metadata?.location)}
+                        onChange={(e) => updateItem(index, { 
+                          metadata: { ...item.metadata, location: e.target.value }
+                        })}
+                        placeholder="Munich, Germany"
+                      />
+                    </div>
+                  )}
+
+                  {config.showMetadata.includes("logoUrl") && (
+                    <ImageUpload
+                      value={item.metadata?.logoUrl}
+                      onChange={(url) => updateItem(index, { 
+                        metadata: { ...item.metadata, logoUrl: url }
+                      })}
+                      label="Logo"
+                    />
+                  )}
+
+                  {config.showTags && (
+                    <div className="space-y-2">
+                      <Label>{section === "skills" ? "Skills" : "Technologies"} (comma separated)</Label>
+                      <Input
+                        value={getValue(item.tags?.join(", "))}
+                        onChange={(e) => updateItem(index, { 
+                          tags: e.target.value.split(",").map(t => t.trim()).filter(Boolean)
+                        })}
+                        placeholder={section === "skills" ? "JavaScript, TypeScript, Python" : "React, Node.js, Docker"}
+                      />
+                    </div>
+                  )}
+
+                  <div className="space-y-2">
+                    <Label>Content (Markdown supported)</Label>
+                    <MDEditor
+                      value={getValue(item.content)}
+                      onChange={(value) => updateItem(index, { content: value || "" })}
+                      preview="edit"
+                      height={200}
+                    />
+                  </div>
+
+                  {config.showMetadata.includes("link") && (
+                    <div className="grid gap-4 md:grid-cols-2">
+                      <div className="space-y-2">
+                        <Label>Project Link</Label>
+                        <Input
+                          value={getValue(item.metadata?.link)}
+                          onChange={(e) => updateItem(index, { 
+                            metadata: { ...item.metadata, link: e.target.value }
+                          })}
+                          placeholder="https://project.com"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>GitHub URL</Label>
+                        <Input
+                          value={getValue(item.metadata?.githubUrl)}
+                          onChange={(e) => updateItem(index, { 
+                            metadata: { ...item.metadata, githubUrl: e.target.value }
+                          })}
+                          placeholder="https://github.com/user/repo"
+                        />
+                      </div>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            )}
+          />
+        </div>
+      )}
     </div>
   )
 }

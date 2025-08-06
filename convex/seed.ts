@@ -67,7 +67,7 @@ export const seedData = mutation({
         section: "experience" as const,
         title: "Everstox GmbH",
         subtitle: "IT & Media Working Student",
-        period: "May 2023 – Present",
+        period: "May 2024 – Present",
         content: `- Responsible for office IT infrastructure, including hardware management, network troubleshooting, and software deployments.
 - Managed Microsoft Intune for device enrollment, compliance policies, and security configurations.
 - Developed and maintained AWS Lambda functions for automation tasks and system integrations.
@@ -86,7 +86,7 @@ export const seedData = mutation({
         section: "experience" as const,
         title: "Technical University Of Munich",
         subtitle: "Full Stack Web Developer - Hiwi Assistant",
-        period: "November 2022 – May 2023",
+        period: "November 2022 – March 2024",
         content: `- Participated in TUM's CommonRoad project, focusing on web application development and maintenance.
 - Implemented a Docker-driven, master-worker architecture for handling academic and competition submissions.
 - Applied React and Material UI for front-end development; Django and PostgreSQL for back-end.
@@ -123,13 +123,18 @@ export const seedData = mutation({
     const projectsData = [
       {
         section: "projects" as const,
-        title: "CommonRoad and ARCH Submission Systems",
-        period: "November 2022 - Present",
-        content: "Master-Worker Architecture systems for processing, grading, and storing submissions, and facilitated user competitions.",
-        tags: ["Django", "React", "S3 Buckets", "PostgreSQL", "RabbitMQ", "Swagger", "Docker", "Gitlab CI"],
+        title: "FlexfitAI (TUM DevOps Course Project)",
+        period: "March 2025 – Present",
+        content: `Key contributor to a team project designing and implementing a full-stack web application based on modern DevOps principles, featuring a Generative AI component.
+        
+- Engineered a Retrieval-Augmented Generation (RAG) system using Python, LangChain, and a vector database (e.g., Weaviate) for the GenAI module.
+- Implemented containerization for all application microservices (client, server, GenAI, DB) using Docker and Docker Compose.
+- Developed and managed CI/CD pipelines with GitHub Actions for automated building, testing, and deployment to a Kubernetes staging environment.
+- Orchestrated deployment using Kubernetes (Helm/raw manifests) and configured system observability with Prometheus and Grafana.`,
+        tags: ["React", "Spring Boot", "Python", "Docker", "Kubernetes", "GitHub Actions", "Prometheus", "Grafana", "LangChain", "Weaviate"],
         metadata: {
-          logoUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/CommonRoad-cehhXCbWRQabJSHdiu25vmLbu8opfX.svg",
-          link: "#"
+          logoUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/tum-logo-Ur1AylbzkA5M7dRnaW7j6Q6Yp3FJL5.png",
+          featured: true
         },
         order: 0,
         published: true
@@ -137,26 +142,37 @@ export const seedData = mutation({
       {
         section: "projects" as const,
         title: "Connactz SetList Integration with Spotify",
-        period: "October 2023 – March 2024",
-        content: "Developed an internal tool for the Connactz platform, enabling users to create Setlists using Spotify.",
-        tags: ["Angular", "Drupal"],
+        period: "October 2023 – October 2024",
+        content: "Participated in an TUM Interdisciplinary Project aimed at developing an internal tool for the Connactz platform. Enabled users to create their own setlists using Spotify, leveraging Angular and Node.js in the technology stack.",
+        tags: ["Angular", "Node.js", "Spotify API"],
         metadata: {
           logoUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/con-O8upI8GPTV4QmEngQ9db2NXCvU6uti.svg",
-          link: "#"
+          featured: true
         },
         order: 1,
         published: true
       },
       {
         section: "projects" as const,
-        title: "E-Farmers",
-        period: "January 2021 - June 2021",
-        content: "E-commerce graduation project with React.js frontend, Django REST API backend, and smart box design using Arduino.",
-        tags: ["React", "Django", "PostgreSQL", "Amazon RDS", "Amazon S3", "Heroku", "Arduino"],
+        title: "CommonRoad and ARCH Submission Systems",
+        period: "November 2022 - March 2024",
+        content: "Contributed to projects using Django, React, S3 Buckets, PostgreSQL, RabbitMQ, Swagger, Docker, GitLab CI. Master-Worker Architecture systems for processing, grading, and storing submissions, and facilitated user competitions.",
+        tags: ["Django", "React", "PostgreSQL", "Docker", "RabbitMQ", "S3", "GitLab CI", "Swagger"],
         metadata: {
-          link: "#"
+          logoUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/CommonRoad-cehhXCbWRQabJSHdiu25vmLbu8opfX.svg",
+          featured: true
         },
         order: 2,
+        published: true
+      },
+      {
+        section: "projects" as const,
+        title: "E-Farmers",
+        period: "January 2021 - June 2021",
+        content: "Developed an e-commerce graduation project, featuring a React.js frontend and Django REST API backend. Integrated smart box design using Arduino, with PostgreSQL and Amazon RDS for database management, Amazon S3 for storage, and Heroku for deployment.",
+        tags: ["React.js", "Django REST API", "PostgreSQL", "Amazon RDS", "Amazon S3", "Arduino", "Heroku"],
+        metadata: {},
+        order: 3,
         published: true
       }
     ];
@@ -167,72 +183,56 @@ export const seedData = mutation({
         section: "skills" as const,
         title: "Programming Languages",
         content: "",
-        tags: ["Python", "C/C++", "C#", "JavaScript", "SQL"],
+        tags: ["Python", "C/C++", "C#", "Java", "JavaScript", "SQL"],
         order: 0,
         published: true
       },
       {
         section: "skills" as const,
-        title: "Front-end Frameworks",
+        title: "Frameworks & Libraries",
         content: "",
-        tags: ["React", "Angular (basic)"],
+        tags: ["Django", "React", "Angular", "Spring", "Node.js (basic)", ".NET Core (basic)", "Flask (basic)", "LangChain"],
         order: 1,
         published: true
       },
       {
         section: "skills" as const,
-        title: "Back-end Frameworks",
+        title: "Tools & Cloud Technologies",
         content: "",
-        tags: ["Django", "Node (basic)", ".Net Core (basic)", "Flask (basic)", "Drupal (basic)"],
+        tags: ["Git", "GitHub Actions", "GitLab CI", "Docker", "Kubernetes", "Helm", "Prometheus", "Grafana", "PostgreSQL", "MySQL", "AWS (S3, RDS, Lambda)", "Terraform", "Weaviate"],
         order: 2,
         published: true
       },
       {
         section: "skills" as const,
-        title: "Cloud & DevOps",
+        title: "Concepts & Methodologies",
         content: "",
-        tags: ["AWS Lambda", "Terraform", "Docker", "GitLab CI", "Microsoft Intune"],
+        tags: ["RESTful APIs", "Microservices", "Containerization", "DevOps (CI/CD)", "Cloud-Native Deployment", "Observability", "RAG (Retrieval-Augmented Generation)", "Agile/Scrum", "Security & Privacy"],
         order: 3,
         published: true
       },
       {
         section: "skills" as const,
-        title: "Databases",
+        title: "Academic Interests",
         content: "",
-        tags: ["PostgreSQL", "MySQL"],
+        tags: ["AI & Deep Learning", "Large Language Models", "Safety", "Resilient Cognitive Systems"],
         order: 4,
-        published: true
-      },
-      {
-        section: "skills" as const,
-        title: "Tools & Technologies",
-        content: "",
-        tags: ["Git", "AWS S3", "AWS RDS", "Heroku", "Arduino"],
-        order: 5,
-        published: true
-      },
-      {
-        section: "skills" as const,
-        title: "Areas",
-        content: "",
-        tags: [
-          "Software Engineering",
-          "IT Infrastructure Management",
-          "Cloud Computing",
-          "Security and Privacy",
-          "UI/UX Web Design",
-          "REST API Development",
-          "AI and Deep Learning (introductory)"
-        ],
-        order: 6,
         published: true
       },
       {
         section: "skills" as const,
         title: "Languages",
         content: "",
-        tags: ["Turkish (native)", "English (B2 certified)", "German (A2 in use)"],
-        order: 7,
+        tags: ["Turkish (native)", "English (C1 certified)", "German (A2 in use)"],
+        order: 5,
+        published: true
+      },
+      {
+        section: "skills" as const,
+        title: "Hobbies & Interests",
+        content: "",
+        tags: ["Game Development", "Web Applications"],
+        order: 6,
         published: true
       }
     ];

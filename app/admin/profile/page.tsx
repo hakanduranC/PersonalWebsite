@@ -38,14 +38,14 @@ export default function ProfileAdmin() {
   
   const [profile, setProfile] = useState<ProfileData>({
     name: "Hakan Duran",
-    title: "Full Stack Developer - Computer Engineer",
+    title: "Full Stack Developer - Computer Engineer & Scientist",
     bio: "Master's student in Computer Science at Technical University of Munich, passionate about full-stack development and innovative tech solutions.",
     avatarUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-02-23%20at%2020.00.41-5xkYOpSc9tXGIREUnjLvVvLhiHnXTT.jpeg",
     backgroundUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-02-23%20at%2019.58.49-SDmQj4rH742nrwfKgfygkylQ4mHsej.jpeg",
     email: "contact@hakanduran.me",
     phone: "+491776247093",
     linkedin: "https://linkedin.com/in/hakanduran98",
-    github: "https://github.com/hakanduran98"
+    github: "https://github.com/hakanduranC"
   })
 
   useEffect(() => {

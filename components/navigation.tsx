@@ -12,6 +12,7 @@ const links = [
   { href: "#projects", label: "Projects" },
   { href: "#skills", label: "Skills" },
   { href: "#contact", label: "Contact" },
+  { href: "/HakanDuranCV.pdf", label: "CV", download: true },
 ]
 
 export function Navigation() {
@@ -26,23 +27,37 @@ export function Navigation() {
           </Link>
           <nav className="flex items-center space-x-6 text-sm font-medium">
             {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "transition-colors hover:text-foreground/80",
-                  pathname === link.href ? "text-foreground" : "text-foreground/60",
-                )}
-                onClick={(e) => {
-                  if (link.href.startsWith('#')) {
-                    e.preventDefault()
-                    const element = document.querySelector(link.href)
-                    element?.scrollIntoView({ behavior: 'smooth' })
-                  }
-                }}
-              >
-                {link.label}
-              </Link>
+              link.download ? (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  download
+                  className={cn(
+                    "transition-colors hover:text-foreground/80",
+                    "text-foreground/60"
+                  )}
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    "transition-colors hover:text-foreground/80",
+                    pathname === link.href ? "text-foreground" : "text-foreground/60",
+                  )}
+                  onClick={(e) => {
+                    if (link.href.startsWith('#')) {
+                      e.preventDefault()
+                      const element = document.querySelector(link.href)
+                      element?.scrollIntoView({ behavior: 'smooth' })
+                    }
+                  }}
+                >
+                  {link.label}
+                </Link>
+              )
             ))}
           </nav>
         </div>
