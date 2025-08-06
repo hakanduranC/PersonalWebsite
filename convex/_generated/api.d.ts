@@ -15,6 +15,7 @@ import type {
 } from "convex/server";
 import type * as content from "../content.js";
 import type * as debug from "../debug.js";
+import type * as files from "../files.js";
 import type * as profile from "../profile.js";
 import type * as seed from "../seed.js";
 
@@ -29,6 +30,7 @@ import type * as seed from "../seed.js";
 declare const fullApi: ApiFromModules<{
   content: typeof content;
   debug: typeof debug;
+  files: typeof files;
   profile: typeof profile;
   seed: typeof seed;
 }>;

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Image from "next/image"
+import { ConvexImage } from "./convex-image"
 import { useQuery } from "convex/react"
 import { api } from "@/convex/_generated/api"
 import ReactMarkdown from 'react-markdown'
@@ -36,7 +37,7 @@ export function UnifiedEducation() {
                   <div className="flex items-center gap-4">
                     {edu.metadata?.logoUrl && (
                       <div className="relative h-12 w-24">
-                        <Image
+                        <ConvexImage
                           src={edu.metadata.logoUrl}
                           alt={`${edu.title} logo`}
                           fill

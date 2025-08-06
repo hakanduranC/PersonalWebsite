@@ -11,6 +11,7 @@ import Link from "next/link"
 import { useToast } from "@/hooks/use-toast"
 import { useQuery, useMutation } from "convex/react"
 import { api } from "@/convex/_generated/api"
+import { ImageUpload } from "@/components/image-upload"
 
 const MDEditor = dynamic(
   () => import("@uiw/react-md-editor"),
@@ -194,21 +195,17 @@ export default function ProfileAdmin() {
             <CardTitle>Media</CardTitle>
             <CardDescription>Profile and background images</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="avatarUrl">Avatar URL</Label>
-              <Input
-                id="avatarUrl"
+          <CardContent className="space-y-6">
+            <div className="grid gap-6 md:grid-cols-2">
+              <ImageUpload
                 value={profile.avatarUrl}
-                onChange={(e) => setProfile({ ...profile, avatarUrl: e.target.value })}
+                onChange={(url) => setProfile({ ...profile, avatarUrl: url })}
+                label="Avatar Image"
               />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="backgroundUrl">Background Image URL</Label>
-              <Input
-                id="backgroundUrl"
+              <ImageUpload
                 value={profile.backgroundUrl}
-                onChange={(e) => setProfile({ ...profile, backgroundUrl: e.target.value })}
+                onChange={(url) => setProfile({ ...profile, backgroundUrl: url })}
+                label="Background Image"
               />
             </div>
           </CardContent>

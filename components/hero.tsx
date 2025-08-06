@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight, Github, Linkedin, Mail, Phone } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { ConvexImage } from "./convex-image"
 import { useQuery } from "convex/react"
 import { api } from "@/convex/_generated/api"
 
@@ -28,7 +29,7 @@ export function Hero() {
   return (
     <div className="relative min-h-screen">
       <div className="absolute inset-0 -z-10">
-        <Image
+        <ConvexImage
           src={data.backgroundUrl || defaultProfile.backgroundUrl}
           alt="Background"
           fill
@@ -117,7 +118,7 @@ export function Hero() {
               <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary/20 to-primary/0 animate-rotate-slow" />
               <div className="absolute inset-[3px] rounded-full bg-gradient-to-tr from-primary/30 to-primary/0 animate-rotate-slow animation-delay-500" />
               <div className="absolute inset-[6px] rounded-full overflow-hidden border-2 border-primary/10">
-                <Image
+                <ConvexImage
                   src={data.avatarUrl || defaultProfile.avatarUrl}
                   alt="Hakan Duran"
                   fill

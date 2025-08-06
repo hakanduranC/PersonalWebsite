@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { ExternalLink, Github } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { ConvexImage } from "./convex-image"
 import { useQuery } from "convex/react"
 import { api } from "@/convex/_generated/api"
 import ReactMarkdown from 'react-markdown'
@@ -47,7 +48,7 @@ export function UnifiedProjects() {
                 <CardHeader>
                   {project.metadata?.logoUrl && (
                     <div className="relative h-12 w-24 mb-4">
-                      <Image
+                      <ConvexImage
                         src={project.metadata.logoUrl}
                         alt={`${project.title} logo`}
                         fill

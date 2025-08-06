@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
+import { ConvexImage } from "./convex-image"
 import { useQuery } from "convex/react"
 import { api } from "@/convex/_generated/api"
 import ReactMarkdown from 'react-markdown'
@@ -46,7 +47,7 @@ export function UnifiedExperience() {
                   <div className="flex items-center gap-4">
                     {exp.metadata?.logoUrl && (
                       <div className="relative h-12 w-24">
-                        <Image
+                        <ConvexImage
                           src={exp.metadata.logoUrl}
                           alt={`${exp.title} logo`}
                           fill

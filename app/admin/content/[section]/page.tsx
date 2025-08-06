@@ -15,6 +15,8 @@ import { useParams } from "next/navigation"
 import { useQuery, useMutation } from "convex/react"
 import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
+import { ImageUpload } from "@/components/image-upload"
+import { SortableList } from "@/components/sortable-list"
 
 const MDEditor = dynamic(
   () => import("@uiw/react-md-editor"),
@@ -138,7 +140,13 @@ export default function UniversalContentAdmin() {
 
   const handleSave = async () => {
     try {
-      for (const item of items) {
+      // Update order based on current position
+      const itemsWithUpdatedOrder = items.map((item, index) => ({
+        ...item,
+        order: index
+      }))
+
+      for (const item of itemsWithUpdatedOrder) {
         if (item.isNew) {
           const { isNew, _id, ...data } = item
           await createContent({
@@ -175,6 +183,11 @@ export default function UniversalContentAdmin() {
         variant: "destructive",
       })
     }
+  }
+
+  const handleReorder = (newItems: ContentItem[]) => {
+    setItems(newItems)
+    setHasChanges(true)
   }
 
   const getFieldLabel = (field: string) => {
@@ -220,13 +233,15 @@ export default function UniversalContentAdmin() {
         </div>
       </div>
 
-      <div className="space-y-6">
-        {items.map((item, index) => (
-          <Card key={item._id || `new-${index}`}>
+      <SortableList
+        items={items}
+        onReorder={handleReorder}
+        keyExtractor={(item) => item._id || `new-${items.indexOf(item)}`}
+        renderItem={(item, index) => (
+          <Card>
             <CardHeader>
               <div className="flex items-center justify-between">
-                <CardTitle className="flex items-center gap-2">
-                  <GripVertical className="h-5 w-5 text-muted-foreground cursor-grab" />
+                <CardTitle>
                   {section === "skills" ? "Category" : "Item"} #{index + 1}
                 </CardTitle>
                 <div className="flex items-center gap-2">
@@ -344,16 +359,13 @@ export default function UniversalContentAdmin() {
               )}
 
               {config.showMetadata.includes("logoUrl") && (
-                <div className="space-y-2">
-                  <Label>Logo URL</Label>
-                  <Input
-                    value={getValue(item.metadata?.logoUrl)}
-                    onChange={(e) => updateItem(index, { 
-                      metadata: { ...item.metadata, logoUrl: e.target.value }
-                    })}
-                    placeholder="https://example.com/logo.png"
-                  />
-                </div>
+                <ImageUpload
+                  value={item.metadata?.logoUrl}
+                  onChange={(url) => updateItem(index, { 
+                    metadata: { ...item.metadata, logoUrl: url }
+                  })}
+                  label="Logo"
+                />
               )}
 
               {config.showTags && (
@@ -405,8 +417,8 @@ export default function UniversalContentAdmin() {
               )}
             </CardContent>
           </Card>
-        ))}
-      </div>
+        )}
+      />
     </div>
   )
 }
