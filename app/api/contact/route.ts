@@ -20,10 +20,20 @@ export async function POST(request: Request) {
     // Validate the request body
     const validatedData = contactSchema.parse(body)
     
+    // Check if API key is present
+    if (!process.env.RESEND_API_KEY) {
+      console.error("RESEND_API_KEY is not set")
+      return NextResponse.json(
+        { error: "Email service not configured" },
+        { status: 500 }
+      )
+    }
+    
     // Send email using Resend
     const { data, error } = await resend.emails.send({
-      from: "Contact Form <onboarding@resend.dev>", // You'll need to verify your domain with Resend to use your own domain
-      to: ["contact@hakanduran.me"],
+      from: "Contact Form <onboarding@resend.dev>", // Using Resend's default domain for now
+      to: ["hakanduranyt@gmail.com"], // Sending directly to your Gmail
+      replyTo: validatedData.email, // So you can reply directly to the sender
       subject: `[Contact Form] ${validatedData.subject}`,
       html: `
         <!DOCTYPE html>
