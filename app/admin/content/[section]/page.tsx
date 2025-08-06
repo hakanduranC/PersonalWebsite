@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
-import { ArrowLeft, Plus, Save, Trash2, GripVertical } from "lucide-react"
+import { ArrowLeft, Plus, Save, Trash2, GripVertical, Eye } from "lucide-react"
 import Link from "next/link"
 import { useToast } from "@/hooks/use-toast"
 import { useParams } from "next/navigation"
@@ -203,6 +203,12 @@ export default function UniversalContentAdmin() {
           <h1 className="text-3xl font-bold">Manage {config.title}</h1>
         </div>
         <div className="flex gap-2">
+          <Button asChild variant="outline">
+            <Link href={`/admin/preview/${section}`}>
+              <Eye className="h-4 w-4 mr-2" />
+              Preview
+            </Link>
+          </Button>
           <Button onClick={addItem} variant="outline">
             <Plus className="h-4 w-4 mr-2" />
             Add {section === "skills" ? "Category" : "Item"}

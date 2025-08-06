@@ -12,14 +12,14 @@ const ALLOWED_EMAILS = process.env.ADMIN_EMAILS?.split(',') || [
 
 export default clerkMiddleware(async (auth, req) => {
   if (isProtectedRoute(req)) {
-    const { userId, sessionClaims } = await auth();
+    const authResult = await auth();
     
-    if (!userId) {
-      // Not signed in
-      return auth.redirectToSignIn();
+    if (!authResult.userId) {
+      // Not signed in - Clerk will handle the redirect automatically
+      await auth.protect();
     }
     
-    const userEmail = sessionClaims?.email as string;
+    const userEmail = authResult.sessionClaims?.email as string;
     
     if (!ALLOWED_EMAILS.includes(userEmail)) {
       // User is signed in but not authorized
