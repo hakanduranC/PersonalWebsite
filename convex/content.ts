@@ -69,6 +69,8 @@ export const create = mutation({
     published: v.boolean(),
   },
   handler: async (ctx, args) => {
+    // TODO: Add auth check when Convex supports Clerk integration
+    // For now, the middleware protects the admin routes
     return await ctx.db.insert("content", args);
   },
 });
