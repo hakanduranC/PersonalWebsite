@@ -18,6 +18,7 @@ yarn-error.log*
 
 # env files
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -28,6 +29,7 @@ next-env.d.ts
 
 # documentation files (keep local only)
 *.md
+!README.md
 ADMIN_SETUP.md
 CLOUDFLARE_EMAIL_GUIDE.md
 DEPLOYMENT_GUIDE.md
