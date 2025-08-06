@@ -41,7 +41,7 @@ export function ContactSection() {
     {
       icon: Github,
       label: "GitHub",
-      href: profile?.github || "https://github.com/hakanduran98",
+      href: profile?.github || "https://github.com/hakanduranC",
     },
   ]
 
